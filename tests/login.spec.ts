@@ -9,5 +9,5 @@ test("login", async ({page})=>{
     await page.getByLabel('Remember me').click()
     await page.getByTestId('login-submit').click()
     await expect(page).toHaveURL("https://www.qapractice.com/practice-login-form")
-    await expect(page.locator('div.fade.alert.alert-success.show')).toHaveText("Login Successful! Welcome to Premium Banking.")
+    await expect(page.getByTestId('login-success')).toContainText("Login Successful! Welcome to Premium Banking.")
 })
