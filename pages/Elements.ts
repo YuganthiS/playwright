@@ -3,6 +3,8 @@ import { Locator } from '@playwright/test';
 //Locators and methods for elements page
 export class ElementsPage {
   readonly page: any;
+  readonly elements: Locator;
+  readonly textBox: Locator;
   readonly fullName: Locator;
   readonly emailInput: Locator;
   readonly currentAddress: Locator;
@@ -12,10 +14,13 @@ export class ElementsPage {
   readonly emailoutput: Locator;
   readonly currentAddressoutput: Locator;
   readonly permanentAddressoutput: Locator;
+  readonly checkBox: Locator;
 
 //Constructor to initialize locators
   constructor(page: any) {
     this.page = page;
+    this.elements = this.page.getByText('Elements', { exact: true });
+    this.textBox = this.page.getByText('Text Box', { exact: true });
     this.fullName = this.page.locator('#userName');   //id locator
     this.emailInput = this.page.getByPlaceholder('name@example.com');  
     this.currentAddress = this.page.locator('#currentAddress'); //id locator
@@ -25,6 +30,7 @@ export class ElementsPage {
     this.emailoutput = this.page.locator('#email');  //id locator
     this.currentAddressoutput = this.page.locator('#output #currentAddress');  //x-path locator //*[@id="currentAddress"]/text()[2]
     this.permanentAddressoutput = this.page.locator('#output #permanentAddress');  //id locator
+    this.checkBox = this.page.getByText('Check Box', { exact: true });
 
   }
 
