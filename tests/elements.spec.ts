@@ -5,18 +5,20 @@ const url = "https://demoqa.com";
 const urlelements = "https://demoqa.com/elements";
 const urlTextBox = "https://demoqa.com/text-box";
 const urlCheckBox = "https://demoqa.com/checkbox";
+const urlRadioButton = "https://demoqa.com/radio-button";
 const fullName = "John Doe";
 let emailInput = "abc@gmail.com";
 const currentAddress = "123 Main St, City, Country";
 const permanentAddress = "123 leeds, england";
 
-let elementPage: ElementsPage;
-
 test.describe("Home Check Box", () => {
+  let elementPage: ElementsPage;
+
   test.beforeEach(async ({ page }) => {
     elementPage = new ElementsPage(page);
     await elementPage.launchElementsPage(urlCheckBox);
     await expect(page).toHaveURL(urlCheckBox);
+  
   });
 
   test("Home Check Box", async () => {
@@ -26,6 +28,7 @@ test.describe("Home Check Box", () => {
     await expect(elementPage.homeCheckBox).toBeChecked();
     await elementPage.homeCheckBox.uncheck();
     await expect(elementPage.homeCheckBox).not.toBeChecked();
+    await expect(elementPage.checkBoxLabel).toBeVisible();
   });
 
   test("Home Check Box Expand and Collapse", async () => {
@@ -89,7 +92,7 @@ test.describe("Home Check Box", () => {
 test("Desktop Check checked and unchecked", async () => {
    
     await elementPage.expandHome.click(); //Expanding the home checkbox to reveal the child checkboxes
-    //await expect(elementPage.homeCheckBox).not.toBeChecked();
+    await expect(elementPage.homeCheckBox).not.toBeChecked();
     await elementPage.expandDesktop.click(); //Expanding the desktop checkbox to reveal the child checkboxes
     await elementPage.desktopCheckBox.check();
     await expect(elementPage.homeCheckBox).toHaveAttribute("aria-checked", "mixed");
@@ -186,17 +189,39 @@ test("Office Check Box checked and unchecked", async () => {
 
 // });
 
-// test("Text Box", async ({ page }) => {
-//   await elementPage.textBox.click();
-//   await expect(page).toHaveURL(urlTextBox);
-//   await elementPage.fullName.fill(fullName);
-//   await elementPage.emailInput.fill(emailInput);
-//   await elementPage.currentAddress.fill(currentAddress);
-//   await elementPage.permanentAddress.fill(permanentAddress);
-//   await elementPage.submitButton.click();
-//   await expect(elementPage.nameoutput).toContainText(fullName);
-//   await expect(elementPage.emailoutput).toContainText(emailInput);
-//   await expect(elementPage.currentAddressoutput).toContainText(currentAddress);
-//   await expect(elementPage.permanentAddressoutput).toContainText(permanentAddress);
-//   await page.screenshot({ path: "screenshot.png", fullPage: true });
+test("Text Box", async ({ page }) => {
+  await elementPage.textBox.click();
+  await expect(page).toHaveURL(urlTextBox);
+  await expect(elementPage.textBoxLabel).toBeVisible();
+  await elementPage.fullName.fill(fullName);
+  await elementPage.emailInput.fill(emailInput);
+  await elementPage.currentAddress.fill(currentAddress);
+  await elementPage.permanentAddress.fill(permanentAddress);
+  await elementPage.submitButton.click();
+  await expect(elementPage.nameoutput).toContainText(fullName);
+  await expect(elementPage.emailoutput).toContainText(emailInput);
+  await expect(elementPage.currentAddressoutput).toContainText(currentAddress);
+  await expect(elementPage.permanentAddressoutput).toContainText(permanentAddress);
+  await page.screenshot({ path: "screenshot.png", fullPage: true });
 });
+
+test("Radio Button", async ({ page }) => {
+  await elementPage.radioButton.click();
+  await expect(page).toHaveURL(urlRadioButton);
+  await expect(elementPage.radioButtonLabel).toBeVisible();
+  await expect(elementPage.radioButtonLabel).toContainText("Radio Button");
+  await expect(elementPage.yesRadioButton).toBeVisible();
+  await expect(elementPage.impressiveRadioButton).toBeVisible();
+  await expect(elementPage.noRadioButton).toBeVisible();
+  await elementPage.yesRadioButton.click();
+  await expect(elementPage.yesRadioButton).toBeChecked();
+  await expect(elementPage.impressiveRadioButton).not.toBeChecked();
+  await expect(elementPage.noRadioButton).not.toBeChecked();
+  await elementPage.impressiveRadioButton.click();
+  await expect(elementPage.impressiveRadioButton).toBeChecked();
+  await expect(elementPage.yesRadioButton).not.toBeChecked();
+  await expect(elementPage.noRadioButton).not.toBeChecked();
+
+});
+
+}); 

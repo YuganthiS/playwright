@@ -38,6 +38,14 @@ export class ElementsPage {
   readonly privateCheckBox: Locator;
   readonly classifiedCheckBox: Locator;
   readonly generalCheckBox: Locator;
+  readonly radioButton: Locator;
+  readonly yesRadioButton: Locator;
+  readonly impressiveRadioButton: Locator;
+  readonly noRadioButton: Locator;
+  readonly radioButtonLabel: Locator;
+  readonly radioButtonMessage: Locator;
+  readonly checkBoxLabel: Locator;
+  readonly textBoxLabel: Locator;
 
 //Constructor to initialize locators
   constructor(page: any) {
@@ -78,6 +86,14 @@ export class ElementsPage {
     this.privateCheckBox = this.page.getByRole("checkbox", {  name: "Select Private", });
     this.classifiedCheckBox = this.page.getByRole("checkbox", {  name: "Select Classified", });
     this.generalCheckBox = this.page.getByRole("checkbox", {  name: "Select General", });
+    this.radioButton = this.page.getByText('Radio Button', { exact: true });
+    this.yesRadioButton = this.page.getByRole("radio", {  name: "Yes", }); //#yesRadio
+    this.impressiveRadioButton = this.page.getByRole("radio", {  name: "Impressive", });
+    this.noRadioButton = this.page.getByRole("radio", {  name: "No", });
+    this.radioButtonLabel = this.page.locator('.col-12.mt-4.col-md-6.col-xl-7 h1');
+    this.radioButtonMessage = this.page.locator('.mt-3');
+    this.checkBoxLabel = this.page.locator('.col-12.mt-4.col-md-6.col-xl-7 h1');
+    this.textBoxLabel = this.page.locator('.col-12.mt-4.col-md-6.col-xl-7 h1');
 
   }
   async launchElementsPage(url: string) {
@@ -110,5 +126,8 @@ export class ElementsPage {
     await this.privateCheckBox.check();
     await this.classifiedCheckBox.check();
     await this.generalCheckBox.check();
+    await this.yesRadioButton.check();
+    await this.impressiveRadioButton.check(); 
+
   }
 }
